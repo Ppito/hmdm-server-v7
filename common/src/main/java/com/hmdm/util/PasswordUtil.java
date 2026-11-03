@@ -1,13 +1,13 @@
 package com.hmdm.util;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class PasswordUtil {
     public static final int PASS_STRENGTH_NONE = 0;
     public static final int PASS_STRENGTH_ALPHADIGIT = 1;
     public static final int PASS_STRENGTH_SPECIAL = 2;
 
-    private static final Random random = new Random();
+    private static final SecureRandom random = new SecureRandom();
 
     private static final String PASS_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.,!#$%()=+;*/";
     private static int DIGIT_START = 0;
@@ -120,7 +120,7 @@ public class PasswordUtil {
     public static String generateToken() {
         StringBuilder b = new StringBuilder();
         for (int n = 0; n < 20; n++) {
-            b.append(PASS_CHARS.charAt(random.nextInt(ALPHA_CAPS_END)));
+            b.append(PASS_CHARS.charAt(random.nextInt(ALPHA_CAPS_END + 1)));
         }
         return b.toString();
     }

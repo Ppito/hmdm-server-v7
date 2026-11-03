@@ -34,11 +34,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class CryptoUtil {
 
     private static final char[] hexArray = "0123456789abcdef".toCharArray();
+
+    private static final SecureRandom random = new SecureRandom();
 
     public CryptoUtil() {
     }
@@ -154,7 +156,6 @@ public class CryptoUtil {
 
     public static String randomHexString(int length) {
         StringBuilder sb = new StringBuilder();
-        Random random = new Random();
 
         for (int i = 0; i < length; i++) {
             sb.append(hexArray[random.nextInt(16)]);
@@ -166,7 +167,6 @@ public class CryptoUtil {
 
     public static String randomString(int length) {
         StringBuilder sb = new StringBuilder();
-        Random random = new Random();
 
         for (int i = 0; i < length; i++) {
             int r = random.nextInt(62);
