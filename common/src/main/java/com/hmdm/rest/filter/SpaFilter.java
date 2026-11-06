@@ -26,6 +26,12 @@ public class SpaFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String requestURI = httpRequest.getRequestURI();
+
+        if (hasPathParameters(requestURI)) {
+            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
         String contextPath = httpRequest.getContextPath();
         String path = requestURI.substring(contextPath.length());
 
@@ -45,6 +51,14 @@ public class SpaFilter implements Filter {
             // Redirect all other requests to index.html
             request.getRequestDispatcher("/index.html").forward(request, response);
         }
+    }
+
+    // Path parameters (';' or '%3B') are rejected: Guice matches its filters against the raw URI,
+    // while Tomcat and Jersey strip them, so /rest/private;x/update would skip the
+    // filters bound to /rest/private/* (authentication!) and still reach /private/update.
+    // This filter is used in all web.xml files, so the check is placed here.
+    private static boolean hasPathParameters(String requestURI) {
+        return requestURI.indexOf(';') != -1 || requestURI.toUpperCase().contains("%3B");
     }
 
     private void sendContextIndexHtml(HttpServletRequest request, HttpServletResponse response, String contextPath)
