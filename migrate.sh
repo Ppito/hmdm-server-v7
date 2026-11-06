@@ -31,7 +31,7 @@ cp -rL $TOMCAT_DIR_OLD/work $TOMCAT_DIR_NEW
 cp -r $TOMCAT_DIR_OLD/ssl $TOMCAT_DIR_NEW
 cp $TOMCAT_DIR_OLD/conf/server.xml $TOMCAT_DIR_NEW/conf
 mkdir -p $TOMCAT_DIR_NEW/conf/Catalina/localhost 
-cp $TOMCAT_DIR_OLD/conf/Catalina/localhost/ROOT.xml $TOMCAT_DIR_NEW/conf/Catalina/localhost
+sed 's/tomcat9/tomcat11/g' $TOMCAT_DIR_OLD/conf/Catalina/localhost/ROOT.xml > $TOMCAT_DIR_NEW/conf/Catalina/localhost/ROOT.xml
 
 cd $SCRIPT_DIR
 
