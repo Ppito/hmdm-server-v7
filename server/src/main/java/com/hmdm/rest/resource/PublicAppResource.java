@@ -110,8 +110,9 @@ public class PublicAppResource {
                                 @FormDataParam("file") FormDataContentDisposition fileDetail,
                                 @Parameter(description = "A JSON-string with application details")
                                 @FormDataParam("app") String app) throws Exception {
-
-        logger.info("Received Upload App request. App: {}", app);
+        /* DEPRECATED AND UNSAFE - replace by a stub */
+        return Response.ERROR();
+/*        logger.info("Received Upload App request. App: {}", app);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -232,6 +233,6 @@ public class PublicAppResource {
         } catch (Exception e) {
             logger.error("Unexpected error while uploading application from mobile device", e);
             return Response.INTERNAL_ERROR();
-        }
+        } */
     }
 }
