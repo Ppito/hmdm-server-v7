@@ -9,9 +9,11 @@ import { RulesService } from './rules.service';
 export class RulesFacadeService {
   private readonly rulesService = inject(RulesService);
   private readonly _rules: WritableSignal<TRuleDTO[]> = signal([]);
+  private readonly _logsPreservePeriod: WritableSignal<number | null> = signal(null);
 
   readonly isLoadingRules: WritableSignal<boolean> = signal(false);
   readonly rules: Signal<TRuleDTO[]> = this._rules.asReadonly();
+  readonly logsPreservePeriod: Signal<number | null> = this._logsPreservePeriod.asReadonly();
 
   constructor() {
     this.searchRules();
@@ -28,7 +30,12 @@ export class RulesFacadeService {
       )
       .subscribe((response) => {
         this._rules.set(response.rules);
+        this._logsPreservePeriod.set(response.logsPreservePeriod);
       });
+  }
+
+  setLogsPreservePeriod(days: number): void {
+    this._logsPreservePeriod.set(days);
   }
 
   createRule(data: any): Observable<void> {

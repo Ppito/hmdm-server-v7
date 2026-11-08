@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   LoaderDirective,
@@ -36,12 +36,23 @@ export class Settings {
   private readonly rulesFacadeService = inject(RulesFacadeService);
   private readonly rulesDialogService = inject(RulesDialogService);
 
-  preserveControl = new FormControl(13, { nonNullable: true });
+  preserveControl = new FormControl(0, { nonNullable: true });
   isLoadingRules = this.rulesFacadeService.isLoadingRules;
+
+  constructor() {
+    effect(() => {
+      const period = this.rulesFacadeService.logsPreservePeriod();
+      if (period !== null) {
+        this.preserveControl.setValue(period);
+      }
+    });
+  }
 
   onPreserve(): void {
     const days = this.preserveControl.value;
-    this.settingsService.preserveMessages(days).subscribe();
+    this.settingsService
+      .preserveMessages(days)
+      .subscribe(() => this.rulesFacadeService.setLogsPreservePeriod(days));
   }
 
   onNewRuleClick(): void {

@@ -1,7 +1,7 @@
 import { TRuleDTO } from './rule-dto.type';
 
 export type TRuleResponse = {
-  logsPreservedPeriod: number;
+  logsPreservePeriod: number;
   id: number;
   customerId: number;
   identifier: string;
