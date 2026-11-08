@@ -28,7 +28,7 @@
     <artifactId>devicelog</artifactId>
 
     <packaging>jar</packaging>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <name>Device Log Plugin for MDM Server</name>
 
     <parent>

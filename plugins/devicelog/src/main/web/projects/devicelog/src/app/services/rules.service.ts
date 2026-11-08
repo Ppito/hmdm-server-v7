@@ -17,7 +17,7 @@ export class RulesService {
   }
 
   delete(id: number) {
-    return this.http.delete<void>(`rest/private/plugin-devicelog/delete/${id}`);
+    return this.http.delete<void>(`rest/private/plugin-devicelog/settings/rule/${id}`);
   }
 
   create(data: any) {

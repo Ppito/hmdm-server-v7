@@ -9,8 +9,10 @@
     formControlName="showSystem"
   ></hmdm-checkbox>
 
-  <hmdm-checkbox
-    [label]="'box.show.my.apps.only' | translate"
-    formControlName="showMy"
-  ></hmdm-checkbox>
+  @if (hasCommonApps()) {
+    <hmdm-checkbox
+      [label]="'box.show.my.apps.only' | translate"
+      formControlName="showMy"
+    ></hmdm-checkbox>
+  }
 </form>

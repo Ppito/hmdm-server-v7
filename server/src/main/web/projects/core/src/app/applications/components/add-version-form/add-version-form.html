@@ -4,11 +4,14 @@
     [label]="'form.application.version' | translate"
   ></hmdm-text-input>
 
+  <!-- Native code: hidden; arch is still filled in from the uploaded APK.
+       To restore, uncomment this and Selector in add-version-form.ts
   <hmdm-selector
     formControlName="arch"
     [label]="'form.application.arch' | translate"
     [options]="architectureOptions"
   ></hmdm-selector>
+  -->
 
   <hmdm-text-input
     formControlName="url"

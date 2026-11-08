@@ -39,7 +39,9 @@ export class RulesTableConfig {
           title: 'plugin.devicelog.settings.rules.heading.group',
         },
         {
-          title: 'table.heading.users.actions',
+          field: 'actions',
+          title: '',
+          width: '120px',
           cellRenderer: RuleActionsCell,
           stickyEnd: true,
         },

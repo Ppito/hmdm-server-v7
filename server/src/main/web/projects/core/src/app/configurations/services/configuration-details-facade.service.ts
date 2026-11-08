@@ -106,6 +106,20 @@ export class ConfigurationDetailsFacadeService {
     this._currentConfiguration.update((config) => (config ? { ...config, ...formValue } : config));
   }
 
+  // The main or content app switched to another version in the app list: the configuration
+  // refers to those apps by version id
+  setMDMAppVersionIds(
+    versionIds: Partial<Pick<TConfigurationMDMFormValue, 'mainAppId' | 'contentAppId'>>,
+  ): void {
+    this.markUnsavedChanges();
+
+    if (this.configurationMDMValue) {
+      this.configurationMDMValue = { ...this.configurationMDMValue, ...versionIds };
+    }
+
+    this._currentConfiguration.update((config) => (config ? { ...config, ...versionIds } : config));
+  }
+
   addAppSetting(appSetting: TAppSettingsDTO): void {
     this.markUnsavedChanges();
 

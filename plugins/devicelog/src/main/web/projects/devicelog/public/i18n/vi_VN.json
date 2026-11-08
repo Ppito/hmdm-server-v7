@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "Thời gian lưu trữ nhật ký (ngày)",
   "plugin.devicelog.setting.rules.title": "Quy tắc",
   "plugin.devicelog.settings.rules.heading.name": "Tên quy tắc",
-  "plugin.devicelog.settings.rules.heading.active": "Hoạt động?",
+  "plugin.devicelog.settings.rules.heading.active": "Hoạt động",
   "plugin.devicelog.settings.rules.heading.filter": "Bộ lọc",
   "plugin.devicelog.settings.rules.heading.application": "Ứng dụng",
   "plugin.devicelog.settings.rules.heading.configuration": "Cấu hình",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "Tên",
   "plugin.devicelog.settings.form.rule.name.placeholder": "Nhập tên quy tắc",
-  "plugin.devicelog.settings.form.rule.active": "Hoạt động?",
+  "plugin.devicelog.settings.form.rule.active": "Hoạt động",
   "plugin.devicelog.settings.form.rule.severity": "Mức",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "Chọn mức nhật ký",
   "plugin.devicelog.settings.form.rule.filter": "Bộ lọc",

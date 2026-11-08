@@ -12,6 +12,7 @@ export type TApkFormValue = {
   file: File | null;
   versionCode?: number;
   versionExists?: boolean;
+  useKiosk?: boolean;
 };
 
-export type TApkForm = TToFormGroup<Omit<TApkFormValue, 'versionCode' | 'versionExists'>>;
+export type TApkForm = TToFormGroup<Omit<TApkFormValue, 'versionCode' | 'versionExists' | 'useKiosk'>>;

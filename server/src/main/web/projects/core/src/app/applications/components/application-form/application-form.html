@@ -12,7 +12,7 @@
   @if (type() === 'app') {
     <core-apk-form
       (formChange)="onApplicationFormChange($event)"
-      (uploadSuccess)="onUploadSuccess()"
+      (uploadSuccess)="onUploadSuccess($event)"
       [initialValue]="initialValue()"
     ></core-apk-form>
   } @else if (type() === 'web') {

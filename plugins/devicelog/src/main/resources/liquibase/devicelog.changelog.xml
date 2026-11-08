@@ -188,4 +188,14 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="plugin-devicelog-07.11.2026-12:00" author="hmdm" context="common">
+        <comment>Remove duplicate plugin_devicelog_settings records</comment>
+        <sql>
+            DELETE FROM plugin_devicelog_settings s
+            WHERE s.id &gt; (SELECT MIN(s2.id) FROM plugin_devicelog_settings s2 WHERE s2.customerId = s.customerId);
+        </sql>
+        <rollback>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

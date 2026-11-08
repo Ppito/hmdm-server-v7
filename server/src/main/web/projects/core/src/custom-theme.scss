@@ -273,6 +273,27 @@ mat-card-title {
   margin-bottom: 16px;
 }
 
+.field-notice {
+  color: #888;
+  font-size: 14px;
+  margin-top: -20px;
+  margin-bottom: 25px;
+  margin-left: 10px;
+}
+
+a {
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+
+  &:hover {
+    color: color-mix(
+      in srgb,
+      var(--mat-sys-on-primary) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
+      var(--mat-sys-primary)
+    );
+  }
+}
+
 body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the

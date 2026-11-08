@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "Günlük saklama süresi (gün)",
   "plugin.devicelog.setting.rules.title": "Kurallar",
   "plugin.devicelog.settings.rules.heading.name": "Kural adı",
-  "plugin.devicelog.settings.rules.heading.active": "Etkin mi?",
+  "plugin.devicelog.settings.rules.heading.active": "Etkin",
   "plugin.devicelog.settings.rules.heading.filter": "Filtre",
   "plugin.devicelog.settings.rules.heading.application": "Uygulama",
   "plugin.devicelog.settings.rules.heading.configuration": "Yapılandırma",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "Ad",
   "plugin.devicelog.settings.form.rule.name.placeholder": "Kural adını girin",
-  "plugin.devicelog.settings.form.rule.active": "Etkin mi?",
+  "plugin.devicelog.settings.form.rule.active": "Etkin",
   "plugin.devicelog.settings.form.rule.severity": "Düzey",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "Günlük düzeyini seçin",
   "plugin.devicelog.settings.form.rule.filter": "Filtre",

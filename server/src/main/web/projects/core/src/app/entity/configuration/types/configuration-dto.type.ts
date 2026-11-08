@@ -56,6 +56,8 @@ export type TConfigurationDTO = {
   wifiSecurityType: string | null;
   encryptDevice: boolean;
   qrParameters: string;
+  adminExtras: string | null;
+  launcherUrl: string | null;
   mobileEnrollment: boolean;
   kioskHome: boolean;
   kioskRecents: boolean;

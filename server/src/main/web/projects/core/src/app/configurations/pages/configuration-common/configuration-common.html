@@ -17,74 +17,88 @@
       [passwordToggle]="true"
       [label]="'form.configuration.settings.common.admin.pwd' | translate"
     ></hmdm-text-input>
+  </div>
 
+  <div class="common-double">
     <hmdm-selector
       formControlName="requestUpdates"
       [label]="'form.configuration.settings.request.updates' | translate"
       [options]="trackingOptions"
     ></hmdm-selector>
+  </div>
 
+  <div class="common-double">
     <hmdm-selector
       formControlName="appPermissions"
       [label]="'form.configuration.settings.apps.permissions' | translate"
       [options]="permissionsOptions"
     ></hmdm-selector>
+  </div>
 
+  <div class="common-double">
     <hmdm-selector
       formControlName="pushOptions"
       [label]="'form.configuration.settings.push.options' | translate"
       [options]="notificationOptions"
       [help]="getPushMessageHelpText(formValue)"
     ></hmdm-selector>
+
+    @if (formValue.pushOptions === 'mqttAlarm') {
+      <hmdm-selector
+        formControlName="keepaliveTime"
+        [label]="'form.configuration.settings.push.options.keepalive' | translate"
+        [options]="keepaliveOptions"
+      ></hmdm-selector>
+    }
   </div>
 
-  @if (formValue.pushOptions === 'mqttAlarm') {
-    <hmdm-selector
-      formControlName="keepaliveTime"
-      [label]="'form.configuration.settings.push.options.keepalive' | translate"
-      [options]="keepaliveOptions"
-    ></hmdm-selector>
-  }
-
-  <div class="common-group">
+  <div class="common-double">
     <hmdm-radio
+      class="common-radio"
       formControlName="gps"
       [options]="commonRadioOptions"
       [label]="'form.configuration.settings.common.gps' | translate"
     ></hmdm-radio>
 
     <hmdm-radio
+      class="common-radio"
       formControlName="bluetooth"
       [options]="commonRadioOptions"
       [label]="'form.configuration.settings.common.bluetooth' | translate"
     ></hmdm-radio>
 
     <hmdm-radio
+      class="common-radio"
       formControlName="wifi"
       [options]="commonRadioOptions"
       [label]="'form.configuration.settings.common.wifi' | translate"
     ></hmdm-radio>
 
     <hmdm-radio
+      class="common-radio"
       formControlName="mobileData"
       [options]="commonRadioOptions"
       [label]="'form.configuration.settings.common.mobile.data' | translate"
     ></hmdm-radio>
 
     <hmdm-radio
+      class="common-radio"
       formControlName="autoBrightness"
       [options]="brightnessRadioOptions"
       [label]="'form.configuration.settings.common.brightness' | translate"
     ></hmdm-radio>
-  </div>
 
-  @if (formValue.autoBrightness === false) {
-    <hmdm-slider
-      formControlName="brightness"
-      [max]="255"
-      [label]="'form.configuration.settings.common.brightness' | translate"
-    ></hmdm-slider>
-  }
+    @if (formValue.autoBrightness === false) {
+      <div class="common-centered">
+        <hmdm-slider
+          formControlName="brightness"
+          [max]="255"
+          [inline]="true"
+          [label]="'form.configuration.settings.common.brightness.slider' | translate"
+        ></hmdm-slider>
+      </div>
+    }
+  </div>
 
   <div class="common-toggle">
     <hmdm-checkbox
@@ -106,25 +120,25 @@
     [label]="'form.configuration.settings.common.usb.storage' | translate"
   ></hmdm-checkbox>
 
-  <hmdm-checkbox
-    formControlName="lockVolume"
-    [label]="'form.configuration.settings.common.volume.block' | translate"
-  ></hmdm-checkbox>
+  <div>
+    <hmdm-checkbox
+      formControlName="lockVolume"
+      [label]="'form.configuration.settings.common.volume.block' | translate"
+    ></hmdm-checkbox>
+  </div>
 
-  <div class="common-toggle">
+  <div class="common-double">
     <hmdm-checkbox
       formControlName="manageVolume"
       [label]="'form.configuration.settings.common.volume.manage' | translate"
     ></hmdm-checkbox>
 
     @if (formValue.manageVolume) {
-      <div class="common-volume">
-        <hmdm-slider
-          formControlName="volume"
-          [inline]="true"
-          [label]="'form.configuration.settings.common.volume.value' | translate"
-        ></hmdm-slider>
-      </div>
+      <hmdm-slider
+        formControlName="volume"
+        [inline]="true"
+        [label]="'form.configuration.settings.common.volume.value' | translate"
+      ></hmdm-slider>
     }
   </div>
 
@@ -148,14 +162,26 @@
     ></hmdm-selector>
 
     @if (formValue.timeZoneMode === 'manual') {
-      <hmdm-text-input
-        formControlName="timeZone"
-        [label]="'form.configuration.settings.common.timezone' | translate"
-      ></hmdm-text-input>
+      <div>
+        <hmdm-text-input
+          formControlName="timeZone"
+          [label]="'form.configuration.settings.common.timezone' | translate"
+          [placeholder]="'form.configuration.settings.common.timezone.placeholder' | translate"
+        ></hmdm-text-input>
+
+        <p class="field-notice common-align-right">
+          <a
+            href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ 'form.configuration.settings.common.timezone.link' | translate }}</a
+          >
+        </p>
+      </div>
     }
   </div>
 
-  <div class="common-toggle">
+  <div class="common-double">
     <hmdm-checkbox
       formControlName="scheduleAppUpdate"
       [label]="'form.configuration.settings.system.schedule.app.update' | translate"
@@ -178,50 +204,50 @@
     }
   </div>
 
-  <hmdm-radio
-    class="common-radio"
-    formControlName="systemUpdateType"
-    [options]="systemRadioOptions"
-    [label]="'form.configuration.settings.system.update' | translate"
-  ></hmdm-radio>
+  <div class="common-double">
+    <hmdm-radio
+      class="common-radio"
+      formControlName="systemUpdateType"
+      [options]="systemRadioOptions"
+      [label]="'form.configuration.settings.system.update' | translate"
+    ></hmdm-radio>
 
-  @if (formValue.systemUpdateType == 2) {
-    <div class="common-timepicker">
-      <div class="common-label">
-        {{ 'form.configuration.settings.system.update.time' | translate }}
+    @if (formValue.systemUpdateType == 2) {
+      <div class="common-timepicker common-system-update-time">
+        <hmdm-timepicker
+          formControlName="systemUpdateFrom"
+          [timeString]="true"
+          [label]="'form.configuration.settings.system.update.time.from' | translate"
+        ></hmdm-timepicker>
+
+        <hmdm-timepicker
+          formControlName="systemUpdateTo"
+          [timeString]="true"
+          [label]="'form.configuration.settings.system.update.time.to' | translate"
+        ></hmdm-timepicker>
       </div>
+    }
+  </div>
 
-      <hmdm-timepicker
-        formControlName="systemUpdateFrom"
-        [timeString]="true"
-        [label]="'form.configuration.settings.system.update.time.from' | translate"
-      ></hmdm-timepicker>
+  <div class="common-double">
+    <hmdm-checkbox
+      formControlName="showWifi"
+      [label]="'form.configuration.settings.show.wifi' | translate"
+    ></hmdm-checkbox>
 
-      <hmdm-timepicker
-        formControlName="systemUpdateTo"
-        [timeString]="true"
-        [label]="'form.configuration.settings.system.update.time.to' | translate"
-      ></hmdm-timepicker>
-    </div>
-  }
+    <hmdm-checkbox
+      formControlName="runDefaultLauncher"
+      [label]="'form.configuration.settings.use.default.launcher' | translate"
+    ></hmdm-checkbox>
 
-  <hmdm-checkbox
-    formControlName="showWifi"
-    [label]="'form.configuration.settings.show.wifi' | translate"
-  ></hmdm-checkbox>
+    <hmdm-checkbox
+      formControlName="disableScreenshots"
+      [label]="'form.configuration.settings.disable.screenshots' | translate"
+    ></hmdm-checkbox>
 
-  <hmdm-checkbox
-    formControlName="runDefaultLauncher"
-    [label]="'form.configuration.settings.use.default.launcher' | translate"
-  ></hmdm-checkbox>
-
-  <hmdm-checkbox
-    formControlName="disableScreenshots"
-    [label]="'form.configuration.settings.disable.screenshots' | translate"
-  ></hmdm-checkbox>
-
-  <hmdm-checkbox
-    formControlName="autostartForeground"
-    [label]="'form.configuration.settings.common.autostart.foreground' | translate"
-  ></hmdm-checkbox>
+    <hmdm-checkbox
+      formControlName="autostartForeground"
+      [label]="'form.configuration.settings.common.autostart.foreground' | translate"
+    ></hmdm-checkbox>
+  </div>
 </form>

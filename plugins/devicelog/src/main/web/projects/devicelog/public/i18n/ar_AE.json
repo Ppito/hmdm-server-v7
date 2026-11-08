@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "(تسجيل وقت تخزين (أيام",
   "plugin.devicelog.setting.rules.title": "القواعد",
   "plugin.devicelog.settings.rules.heading.name": "اسم القاعدة",
-  "plugin.devicelog.settings.rules.heading.active": "نشط؟",
+  "plugin.devicelog.settings.rules.heading.active": "نشط",
   "plugin.devicelog.settings.rules.heading.filter": "عامل التصفية",
   "plugin.devicelog.settings.rules.heading.application": "تطبيق",
   "plugin.devicelog.settings.rules.heading.configuration": "الاعداد",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "الاسم",
   "plugin.devicelog.settings.form.rule.name.placeholder": "أدخل اسم القاعدة",
-  "plugin.devicelog.settings.form.rule.active": "نشط؟",
+  "plugin.devicelog.settings.form.rule.active": "نشط",
   "plugin.devicelog.settings.form.rule.severity": "مستوى",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "حدد مستوى السجل",
   "plugin.devicelog.settings.form.rule.filter": "عامل التصفية",

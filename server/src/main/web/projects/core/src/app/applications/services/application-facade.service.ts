@@ -18,17 +18,17 @@ export class ApplicationFacadeService {
   formData: TApplicationsSearchFormValue | null = null;
   isLoadingApplications: WritableSignal<boolean> = signal(false);
   applications: Signal<TApplicationDTO[]> = this._applications.asReadonly();
+  hasCommonApps: Signal<boolean> = computed(() => this._applications().some((app) => app.common));
   applicationsTable: Signal<TApplicationDTO[]> = computed(() => {
     const applications = this._applications();
+    const currentCustomerId = this.userStateService.currentUser()?.customerId;
 
     return applications.filter((app) => {
-      const currentUserId = this.userStateService.currentUser()?.id;
-
       if (!this.formData?.showSystem && app.system) {
         return false;
       }
 
-      if (this.formData?.showMy && app.customerId !== currentUserId) {
+      if (this.formData?.showMy && app.common && app.customerId !== currentCustomerId) {
         return false;
       }
 

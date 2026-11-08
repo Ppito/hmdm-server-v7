@@ -4,7 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import {
   Checkbox,
   FileInputComponent,
-  Selector,
+  // Selector, // Native code field is hidden in the template
   TextInputComponent,
   TranslatePipe,
 } from 'hmdm-ui-kit';
@@ -21,7 +21,7 @@ import { TFileUploadResult } from '../../../entity/application/types/file-upload
   imports: [
     ReactiveFormsModule,
     TextInputComponent,
-    Selector,
+    // Selector, // Native code field is hidden in the template
     FileInputComponent,
     Checkbox,
     TranslatePipe,

@@ -23,9 +23,9 @@ import { ApkForm } from '../apk-form/apk-form';
 import { ApplicationIconForm } from '../application-icon-form/application-icon-form';
 import { SystemActionForm } from '../system-action-form/system-action-form';
 import { WebPageForm } from '../web-page-form/web-page-form';
-import { EApplicationType } from '../../../entity/application/enum/application-type.enum';
 import { TApplicationDTO } from '../../../entity/application/types/application-dto.type';
 import { TApplicationType } from '../../../entity/application/types/application-type.type';
+import { TFileUploadResult } from '../../../entity/application/types/file-upload-result.type';
 
 @Component({
   selector: 'core-application-form',
@@ -90,8 +90,8 @@ export class ApplicationForm extends BaseComponent implements OnInit {
     });
   }
 
-  onUploadSuccess(): void {
-    this.iconForm()?.setShowIcon(true);
+  onUploadSuccess(result: TFileUploadResult): void {
+    this.iconForm()?.setShowIcon(result.application?.showIcon ?? true);
   }
 
   onApplicationFormChange($event: TApplicationFormValue | null): void {
@@ -146,14 +146,7 @@ export class ApplicationForm extends BaseComponent implements OnInit {
   }
 
   private getEditedRecordFields(): Partial<TApplicationDTO> {
-    const initialValue = this.initialValue();
-
-    if (!initialValue) {
-      return {};
-    }
-
-    const { latestVersion, ...rest } = initialValue;
-
-    return initialValue.type === EApplicationType.APP ? rest : initialValue;
+    // latestVersion is required: the backend applies the edited URL to that version
+    return this.initialValue() ?? {};
   }
 }

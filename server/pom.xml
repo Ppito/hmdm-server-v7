@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>server</artifactId>
     <packaging>war</packaging>
-    <version>7.03.4</version>
+    <version>7.04.1</version>
     <name>MDM Server</name>
 
     <parent>
@@ -71,7 +71,7 @@
         <!-- The formatting of these lines must be kept as is - a single line -->
         <dependency><groupId>com.hmdm.plugin</groupId><artifactId>audit</artifactId><version>0.1.0</version><scope>runtime</scope></dependency>
         <dependency><groupId>com.hmdm.plugin</groupId><artifactId>deviceinfo</artifactId><version>0.1.0</version><scope>runtime</scope></dependency>
-        <dependency><groupId>com.hmdm.plugin</groupId><artifactId>devicelog</artifactId><version>0.1.0</version><scope>runtime</scope></dependency>
+        <dependency><groupId>com.hmdm.plugin</groupId><artifactId>devicelog</artifactId><version>0.1.1</version><scope>runtime</scope></dependency>
         <dependency><groupId>com.hmdm.plugin</groupId><artifactId>messaging</artifactId><version>0.1.0</version><scope>runtime</scope></dependency>
         <dependency><groupId>com.hmdm.plugin</groupId><artifactId>push</artifactId><version>0.1.0</version><scope>runtime</scope></dependency>
         <dependency><groupId>com.hmdm.plugin</groupId><artifactId>xtra</artifactId><version>0.1.0</version><scope>runtime</scope></dependency>

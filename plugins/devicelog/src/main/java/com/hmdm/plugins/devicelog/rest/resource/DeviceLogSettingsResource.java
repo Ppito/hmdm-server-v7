@@ -168,7 +168,14 @@ public class DeviceLogSettingsResource {
             DeviceLogPluginSettings settings = mapper.readValue(settingsJSON, this.settingsDAO.getSettingsClass());
             
             if (settings.getIdentifier() == null) {
-                this.settingsDAO.insertPluginSettings(settings);
+                // The settings record is unique per customer: update the existing one if any
+                DeviceLogPluginSettings existingSettings = this.settingsDAO.getPluginSettings();
+                if (existingSettings != null) {
+                    existingSettings.setLogsPreservePeriod(settings.getLogsPreservePeriod());
+                    this.settingsDAO.updatePluginSettings(existingSettings);
+                } else {
+                    this.settingsDAO.insertPluginSettings(settings);
+                }
             } else {
                 this.settingsDAO.updatePluginSettings(settings);
             }

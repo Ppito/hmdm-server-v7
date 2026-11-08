@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "Tempo de Expiração dos Logs (Dias)",
   "plugin.devicelog.setting.rules.title": "Regras",
   "plugin.devicelog.settings.rules.heading.name": "Nome da Regra",
-  "plugin.devicelog.settings.rules.heading.active": "Ativo?",
+  "plugin.devicelog.settings.rules.heading.active": "Ativo",
   "plugin.devicelog.settings.rules.heading.filter": "Filtro",
   "plugin.devicelog.settings.rules.heading.application": "Aplicativo",
   "plugin.devicelog.settings.rules.heading.configuration": "Configuração",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "Nome",
   "plugin.devicelog.settings.form.rule.name.placeholder": "Digite o nome da regra",
-  "plugin.devicelog.settings.form.rule.active": "Ativo?",
+  "plugin.devicelog.settings.form.rule.active": "Ativo",
   "plugin.devicelog.settings.form.rule.severity": "Level",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "Selecione o level",
   "plugin.devicelog.settings.form.rule.filter": "Filtro",

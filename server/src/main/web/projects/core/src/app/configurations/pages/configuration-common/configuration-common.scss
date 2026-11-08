@@ -14,12 +14,6 @@
     justify-content: flex-start;
   }
 
-  &-group {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  }
-
   &-double {
     display: grid;
     gap: 16px;
@@ -49,14 +43,15 @@
     flex: 1;
   }
 
-  &-volume {
-    width: 320px;
-    max-width: 100%;
+  &-align-right {
+    text-align: right;
   }
 
-  &-label {
-    font-size: 16px;
-    margin-right: 8px;
-    padding-top: 8px;
+  &-centered {
+    align-self: center;
+  }
+
+  &-system-update-time {
+    margin-top: 25px;
   }
 }

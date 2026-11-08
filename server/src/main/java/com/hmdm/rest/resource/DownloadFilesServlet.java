@@ -110,9 +110,18 @@ public class DownloadFilesServlet extends HttpServlet {
         File file = new File(String.format("%s/%s", this.filesDirectory, path));
         if (file.exists()) {
 
-            long modifiedSince = req.getDateHeader("If-Modified-Since");
-            if (modifiedSince != -1 && modifiedSince > file.lastModified()) {
-                // Client can use cached images
+            // Validators and range support, required by CDNs (e.g. Google Cloud CDN) to cache large files.
+            // HTTP dates have a one-second precision, so milliseconds are dropped
+            long lastModified = file.lastModified() / 1000 * 1000;
+            // ETag must be stable across requests, restarts and cluster nodes (a CDN compares it between range
+            // requests), so it's derived from size and modification time, like nginx does
+            String etag = "\"" + Long.toHexString(file.length()) + "-" + Long.toHexString(lastModified) + "\"";
+            resp.setHeader("Accept-Ranges", "bytes");
+            resp.setDateHeader("Last-Modified", lastModified);
+            resp.setHeader("ETag", etag);
+
+            if (isNotModified(req, etag, lastModified)) {
+                // Client can use cached files
                 resp.setStatus(304);
                 return;
             }
@@ -122,7 +131,8 @@ public class DownloadFilesServlet extends HttpServlet {
             resp.addHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
 
             String range = req.getHeader("Range");
-            if (range != null && range.startsWith("bytes=") && sendPartialContent(range.substring(6), file, resp)) {
+            if (range != null && range.startsWith("bytes=") && isIfRangeMatching(req, etag, lastModified)
+                    && sendPartialContent(range.substring(6), file, resp)) {
                 return;
             }
 
@@ -148,6 +158,51 @@ public class DownloadFilesServlet extends HttpServlet {
             resp.sendError(404);
         }
 
+    }
+
+    /**
+     * Checks If-None-Match (weak comparison) or, if it is absent, If-Modified-Since.
+     */
+    private boolean isNotModified(HttpServletRequest req, String etag, long lastModified) {
+        String ifNoneMatch = req.getHeader("If-None-Match");
+        if (ifNoneMatch != null) {
+            for (String tag : ifNoneMatch.split(",")) {
+                tag = tag.trim();
+                if (tag.startsWith("W/")) {
+                    tag = tag.substring(2);
+                }
+                if (tag.equals("*") || tag.equals(etag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        long modifiedSince = getDateHeader(req, "If-Modified-Since");
+        return modifiedSince != -1 && modifiedSince >= lastModified;
+    }
+
+    /**
+     * Checks If-Range: a range is served only if the client's copy is still current (strong comparison).
+     * Otherwise the whole file is sent.
+     */
+    private boolean isIfRangeMatching(HttpServletRequest req, String etag, long lastModified) {
+        String ifRange = req.getHeader("If-Range");
+        if (ifRange == null) {
+            return true;
+        }
+        ifRange = ifRange.trim();
+        if (ifRange.startsWith("\"") || ifRange.startsWith("W/")) {
+            return ifRange.equals(etag);
+        }
+        return getDateHeader(req, "If-Range") == lastModified;
+    }
+
+    private long getDateHeader(HttpServletRequest req, String name) {
+        try {
+            return req.getDateHeader(name);
+        } catch (IllegalArgumentException e) {
+            return -1;
+        }
     }
 
     /**

@@ -30,6 +30,7 @@
         <if test="searchValue != null">
             AND (
             customers.name ILIKE ('%' || #{searchValue} || '%') OR customers.description ILIKE ('%' || #{searchValue} || '%')
+            OR customers.email ILIKE ('%' || #{searchValue} || '%')
             )
         </if>
         <if test="accountType != null">
@@ -75,6 +76,7 @@
         <if test="searchValue != null">
             AND (
             customers.name ILIKE ('%' || #{searchValue} || '%') OR customers.description ILIKE ('%' || #{searchValue} || '%')
+            OR customers.email ILIKE ('%' || #{searchValue} || '%')
             )
         </if>
         <if test="accountType != null">

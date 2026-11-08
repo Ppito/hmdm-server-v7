@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "ログ保存時間 (日)",
   "plugin.devicelog.setting.rules.title": "ルール",
   "plugin.devicelog.settings.rules.heading.name": "ルール名",
-  "plugin.devicelog.settings.rules.heading.active": "有効?",
+  "plugin.devicelog.settings.rules.heading.active": "有効",
   "plugin.devicelog.settings.rules.heading.filter": "フィルター",
   "plugin.devicelog.settings.rules.heading.application": "アプリケーション",
   "plugin.devicelog.settings.rules.heading.configuration": "設定",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "名前",
   "plugin.devicelog.settings.form.rule.name.placeholder": "ルール名を入力してください",
-  "plugin.devicelog.settings.form.rule.active": "有効?",
+  "plugin.devicelog.settings.form.rule.active": "有効",
   "plugin.devicelog.settings.form.rule.severity": "レベル",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "ログレベルを選択",
   "plugin.devicelog.settings.form.rule.filter": "フィルター",

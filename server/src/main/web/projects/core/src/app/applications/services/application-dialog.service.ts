@@ -136,8 +136,16 @@ export class ApplicationDialogService {
           return this.applicationService.createApplication(data).pipe(map(saved));
         }
 
-        // Single match and version is new → silently add a new version
-        if (duplicates.length === 1 && !appData.versionExists) {
+        // Single match, same name and a newer version → silently add a new version.
+        // Otherwise (existing or older version, renamed app) ask the user.
+        const existing = duplicates[0];
+        const versionCode = appData.versionCode ?? 0;
+        if (
+          duplicates.length === 1 &&
+          !appData.versionExists &&
+          existing.versionCode <= versionCode &&
+          existing.name === appData.name
+        ) {
           return this.applicationService
             .createApplicationVersion({
               applicationId: duplicates[0].id,
@@ -152,6 +160,7 @@ export class ApplicationDialogService {
               runAfterInstall: appData.runAfterInstall,
               showIcon: appData.showIcon,
               system: appData.system,
+              useKiosk: appData.useKiosk,
               autoUpdateDisplayed: true,
             })
             .pipe(map(saved));
@@ -191,6 +200,7 @@ export class ApplicationDialogService {
                     runAfterInstall: appData.runAfterInstall,
                     showIcon: appData.showIcon,
                     system: appData.system,
+                    useKiosk: appData.useKiosk,
                     autoUpdateDisplayed: true,
                   })
                   .pipe(map(saved));

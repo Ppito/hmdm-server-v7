@@ -1,4 +1,4 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, inject, input, InputSignal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   Checkbox,
@@ -7,6 +7,7 @@ import {
   TranslatePipe,
   PersistFormDirective,
 } from 'hmdm-ui-kit';
+import { ApplicationFacadeService } from '../../services/application-facade.service';
 
 @Component({
   selector: 'core-applications-search-form',
@@ -23,4 +24,5 @@ import {
 })
 export class ApplicationsSearchForm {
   formGroup: InputSignal<FormGroup> = input.required();
+  hasCommonApps = inject(ApplicationFacadeService).hasCommonApps;
 }

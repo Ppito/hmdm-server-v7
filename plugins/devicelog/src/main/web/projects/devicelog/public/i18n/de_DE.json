@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "Protokollspeicherzeit (Tage)",
   "plugin.devicelog.setting.rules.title": "Rules",
   "plugin.devicelog.settings.rules.heading.name": "Regelname",
-  "plugin.devicelog.settings.rules.heading.active": "Aktiv?",
+  "plugin.devicelog.settings.rules.heading.active": "Aktiv",
   "plugin.devicelog.settings.rules.heading.filter": "Filter",
   "plugin.devicelog.settings.rules.heading.application": "Anwendung",
   "plugin.devicelog.settings.rules.heading.configuration": "Konfiguration",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "Name",
   "plugin.devicelog.settings.form.rule.name.placeholder": "Geben Sie den Regelnamen ein",
-  "plugin.devicelog.settings.form.rule.active": "Aktiv?",
+  "plugin.devicelog.settings.form.rule.active": "Aktiv",
   "plugin.devicelog.settings.form.rule.severity": "Schweregrad",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "Protokollstufe auswählen",
   "plugin.devicelog.settings.form.rule.filter": "Filter",

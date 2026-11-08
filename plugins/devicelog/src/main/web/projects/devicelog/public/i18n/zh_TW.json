@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "日誌存儲時間（天）",
   "plugin.devicelog.setting.rules.title": "規則",
   "plugin.devicelog.settings.rules.heading.name": "規則名稱",
-  "plugin.devicelog.settings.rules.heading.active": "活性？",
+  "plugin.devicelog.settings.rules.heading.active": "活性",
   "plugin.devicelog.settings.rules.heading.filter": "過濾",
   "plugin.devicelog.settings.rules.heading.application": "應用",
   "plugin.devicelog.settings.rules.heading.configuration": "配置",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "名稱",
   "plugin.devicelog.settings.form.rule.name.placeholder": "輸入規則名稱",
-  "plugin.devicelog.settings.form.rule.active": "活性？",
+  "plugin.devicelog.settings.form.rule.active": "活性",
   "plugin.devicelog.settings.form.rule.severity": "水平",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "選擇日誌級別",
   "plugin.devicelog.settings.form.rule.filter": "過濾",

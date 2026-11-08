@@ -8,7 +8,7 @@
       matInput
       [formControl]="formControl"
       [type]="type()"
-      [placeholder]="label()"
+      [placeholder]="placeholder() || label()"
       [mask]="mask()"
       [maxLength]="maxLengthNum()"
       (blur)="onTouched()"

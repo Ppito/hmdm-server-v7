@@ -30,6 +30,7 @@ export class ConfigurationMdmFormConfig {
       wifiSecurityType: this.fb.control(''),
       launcherUrl: this.fb.control(''),
       qrParameters: this.fb.control(''),
+      adminExtras: this.fb.control(''),
       mobileEnrollment: this.fb.control(false),
       encryptDevice: this.fb.control(false),
       restrictions: this.fb.control(''),

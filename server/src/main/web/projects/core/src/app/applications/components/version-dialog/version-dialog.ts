@@ -115,6 +115,10 @@ export class VersionDialog extends DialogBase implements OnInit {
       const serverPath = this.versionForm.getUploadedFileServerPath();
       if (serverPath) {
         request.filePath = serverPath;
+        const versionCode = this.versionForm.getAPKDetails()?.fileDetails?.versionCode;
+        if (versionCode) {
+          request.versionCode = versionCode;
+        }
       }
     } else if (formData.url) {
       request.url = formData.url;

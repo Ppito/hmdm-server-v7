@@ -27,6 +27,7 @@ export type TConfigurationMDMFormValue = {
   wifiSecurityType: string;
   launcherUrl: string;
   qrParameters: string;
+  adminExtras: string;
   mobileEnrollment: boolean;
   encryptDevice: boolean;
 

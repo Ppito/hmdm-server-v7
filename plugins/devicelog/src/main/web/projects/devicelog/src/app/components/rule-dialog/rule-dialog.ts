@@ -47,7 +47,7 @@ export class RuleDialog extends DialogBase implements OnInit {
 
   onDevicesDialog(): void {
     const dialogRef = this.matDialog.open(RuleDevicesDialog, {
-      data: this.data?.devices || [],
+      data: this.devices,
       autoFocus: false,
     });
 
@@ -72,13 +72,19 @@ export class RuleDialog extends DialogBase implements OnInit {
       configurationId:
         typeof form?.configurationId === 'number'
           ? Number(form?.configurationId)
-          : this.data?.configurationId || null,
+          : form?.configurationId
+            ? this.data?.configurationId || null
+            : null,
       applicationId:
         typeof form?.applicationId === 'number'
           ? Number(form?.applicationId)
           : this.data?.applicationId,
       groupId:
-        typeof form?.groupId === 'number' ? Number(form?.groupId) : this.data?.groupId || null,
+        typeof form?.groupId === 'number'
+          ? Number(form?.groupId)
+          : form?.groupId
+            ? this.data?.groupId || null
+            : null,
     });
   }
 }

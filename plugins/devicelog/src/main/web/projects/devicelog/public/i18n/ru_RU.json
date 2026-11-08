@@ -8,7 +8,7 @@
   "plugin.devicelog.settings.log.preserve.period": "Время хранения журналов (дни)",
   "plugin.devicelog.setting.rules.title": "Правила",
   "plugin.devicelog.settings.rules.heading.name": "Наименование правила",
-  "plugin.devicelog.settings.rules.heading.active": "Активно?",
+  "plugin.devicelog.settings.rules.heading.active": "Активно",
   "plugin.devicelog.settings.rules.heading.filter": "Фильтр",
   "plugin.devicelog.settings.rules.heading.application": "Приложение",
   "plugin.devicelog.settings.rules.heading.configuration": "Конфигурация",
@@ -17,7 +17,7 @@
 
   "plugin.devicelog.settings.form.rule.name": "Наименование",
   "plugin.devicelog.settings.form.rule.name.placeholder": "Введите наименование правила",
-  "plugin.devicelog.settings.form.rule.active": "Активно?",
+  "plugin.devicelog.settings.form.rule.active": "Активно",
   "plugin.devicelog.settings.form.rule.severity": "Уровень",
   "plugin.devicelog.settings.form.rule.severity.placeholder": "Выберите уровень логов",
   "plugin.devicelog.settings.form.rule.filter": "Фильтр",

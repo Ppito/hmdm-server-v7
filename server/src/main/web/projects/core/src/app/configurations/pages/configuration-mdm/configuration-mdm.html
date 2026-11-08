@@ -14,6 +14,7 @@
     <hmdm-text-input
       formControlName="eventReceivingComponent"
       [label]="'form.configuration.settings.mdm.component.event.receiver' | translate"
+      [placeholder]="'form.configuration.settings.mdm.component.event.receiver.placeholder' | translate"
     ></hmdm-text-input>
   </div>
 
@@ -72,30 +73,47 @@
     <hmdm-text-input
       formControlName="wifiSSID"
       [label]="'form.configuration.settings.mdm.component.wifi.ssid' | translate"
+      [placeholder]="'form.configuration.settings.mdm.component.wifi.ssid.placeholder' | translate"
     ></hmdm-text-input>
 
     <hmdm-text-input
       formControlName="wifiPassword"
       [label]="'form.configuration.settings.mdm.component.wifi.password' | translate"
+      [placeholder]="'form.configuration.settings.mdm.component.wifi.password.placeholder' | translate"
     ></hmdm-text-input>
   </div>
+
+  <p class="field-notice">{{ 'form.configuration.settings.mdm.component.wifi.notice' | translate }}</p>
+
+  <hmdm-text-input
+    formControlName="launcherUrl"
+    [label]="'form.configuration.settings.mdm.launcher' | translate"
+    [placeholder]="'form.configuration.settings.mdm.launcher.placeholder' | translate"
+  ></hmdm-text-input>
 
   <hmdm-textarea-input
     formControlName="qrParameters"
     [label]="'form.configuration.settings.mdm.misc' | translate"
+    [placeholder]="'form.configuration.settings.mdm.misc.placeholder' | translate"
   ></hmdm-textarea-input>
 
-  <hmdm-checkbox
-    formControlName="mobileEnrollment"
-    [label]="'form.configuration.settings.mdm.mobile.enrollment' | translate"
-  ></hmdm-checkbox>
+  <hmdm-textarea-input
+    formControlName="adminExtras"
+    [label]="'form.configuration.settings.mdm.extras' | translate"
+    [placeholder]="'form.configuration.settings.mdm.extras.placeholder' | translate"
+  ></hmdm-textarea-input>
 
-  <hmdm-checkbox
-    formControlName="encryptDevice"
-    [label]="'form.configuration.settings.mdm.encrypt.device' | translate"
-  ></hmdm-checkbox>
+  <div class="mdm-double">
+    <hmdm-checkbox
+      formControlName="mobileEnrollment"
+      [label]="'form.configuration.settings.mdm.mobile.enrollment' | translate"
+    ></hmdm-checkbox>
 
-  <div class="mdm-nokiosk">
+    <hmdm-checkbox
+      formControlName="encryptDevice"
+      [label]="'form.configuration.settings.mdm.encrypt.device' | translate"
+    ></hmdm-checkbox>
+
     <hmdm-checkbox
       formControlName="permissive"
       [label]="'form.configuration.settings.mdm.permissive' | translate"
@@ -105,20 +123,35 @@
       formControlName="lockSafeSettings"
       [label]="'form.configuration.settings.mdm.lock.safe.settings' | translate"
     ></hmdm-checkbox>
+  </div>
 
+  <div class="mdm-nokiosk">
     <hmdm-textarea-input
       formControlName="allowedClasses"
       [label]="'form.configuration.settings.mdm.allowed.classes' | translate"
+      [placeholder]="'form.configuration.settings.mdm.allowed.classes.placeholder' | translate"
     ></hmdm-textarea-input>
   </div>
 
   <hmdm-textarea-input
     formControlName="restrictions"
     [label]="'form.configuration.settings.mdm.restrictions' | translate"
+    [placeholder]="'form.configuration.settings.mdm.restrictions.placeholder' | translate"
   ></hmdm-textarea-input>
+
+  <p class="field-notice">
+    {{ 'form.configuration.settings.mdm.restrictions.notice' | translate }}
+    <a
+      href="https://developer.android.com/reference/android/os/UserManager"
+      target="_blank"
+      rel="noopener noreferrer"
+      >{{ 'form.configuration.settings.mdm.restrictions.notice.link' | translate }}</a
+    >
+  </p>
 
   <hmdm-text-input
     formControlName="newServerUrl"
     [label]="'form.configuration.settings.mdm.component.server.url' | translate"
+    [placeholder]="'form.configuration.settings.mdm.component.server.url.placeholder' | translate"
   ></hmdm-text-input>
 </form>

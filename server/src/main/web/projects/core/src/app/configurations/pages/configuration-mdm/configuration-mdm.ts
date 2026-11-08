@@ -79,7 +79,9 @@ export class ConfigurationMdm extends BaseComponent implements OnInit {
           wifiPassword: currentConfig.wifiPassword || '',
           wifiSecurityType: currentConfig.wifiSecurityType || '',
 
+          launcherUrl: currentConfig.launcherUrl || '',
           qrParameters: currentConfig.qrParameters || '',
+          adminExtras: currentConfig.adminExtras || '',
           mobileEnrollment: currentConfig.mobileEnrollment || false,
           encryptDevice: currentConfig.encryptDevice || false,
 

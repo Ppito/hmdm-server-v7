@@ -52,7 +52,7 @@ export class ApkForm extends BaseComponent implements OnInit {
   initialValue: InputSignal<TApplicationDTO | null> = input<TApplicationDTO | null>(null);
 
   formChange: OutputEmitterRef<NoInfer<TApplicationAppValue | null>> = output();
-  uploadSuccess: OutputEmitterRef<void> = output();
+  uploadSuccess: OutputEmitterRef<TFileUploadResult> = output();
 
   private readonly applicationService = inject(ApplicationService);
   private readonly apkFormConfig = inject(ApkFormConfig);
@@ -84,9 +84,13 @@ export class ApkForm extends BaseComponent implements OnInit {
         ...initialValue,
         arch: initialValue.arch || EApplicationArchitecture.NONE,
       };
-      this.formGroup.patchValue({ ...value, url: '', file: null });
+      // The URL is applied to the latest version; split APKs have per-arch URLs and can't be edited here
+      this.formGroup.patchValue({ ...value, url: initialValue.url ?? '', file: null });
       this.formGroup.controls.version.disable();
       this.formGroup.controls.arch.disable();
+      if (initialValue.split || initialValue.system) {
+        this.formGroup.controls.url.disable();
+      }
     }
 
     this.initFormListeners();
@@ -115,6 +119,7 @@ export class ApkForm extends BaseComponent implements OnInit {
       filePath: this.uploadResult?.serverPath ?? '',
       versionCode: this.uploadResult?.fileDetails?.versionCode,
       versionExists: this.versionExists(),
+      ...(this.uploadResult?.application && { useKiosk: this.uploadResult.application.useKiosk }),
     });
   }
 
@@ -187,10 +192,28 @@ export class ApkForm extends BaseComponent implements OnInit {
               this.uploadStatus.set('success');
               this.uploadResult = result;
 
+              // Set before patchValue: patchValue emits the form value to the parent
+              if (result.exists) {
+                this.versionExists.set(true);
+              }
+
+              const existingApp = result.application;
+              if (existingApp) {
+                // Without emitting: the 'system' listener would clear the uploaded file
+                this.formGroup.controls.system.setValue(!!existingApp.system, { emitEvent: false });
+                if (existingApp.system) {
+                  this.formGroup.controls.runAfterInstall.disable({ emitEvent: false });
+                }
+              }
+
               if (result.fileDetails) {
                 this.formGroup.patchValue({
+                  ...(existingApp && {
+                    runAfterInstall: !!existingApp.runAfterInstall,
+                    runAtBoot: !!existingApp.runAtBoot,
+                  }),
                   pkg: result.fileDetails.pkg,
-                  name: result.fileDetails.name,
+                  name: result.application?.name || result.fileDetails.name,
                   version: result.fileDetails.version,
                   arch: result.fileDetails.arch ?? EApplicationArchitecture.NONE,
                 });
@@ -198,11 +221,7 @@ export class ApkForm extends BaseComponent implements OnInit {
                 this.formGroup.controls.version.disable();
               }
 
-              if (result.exists) {
-                this.versionExists.set(true);
-              }
-
-              this.uploadSuccess.emit();
+              this.uploadSuccess.emit(result);
             },
             error: (err) => {
               this.uploadStatus.set('error');

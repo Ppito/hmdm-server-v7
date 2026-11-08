@@ -12,7 +12,7 @@ export class RuleFormConfig {
     return this.fb.group<TRuleForm>({
       name: this.fb.control('', [Validators.required]),
       active: this.fb.control(true),
-      severity: this.fb.control('NONE'),
+      severity: this.fb.control('VERBOSE'),
       applicationId: this.fb.control(null, Validators.required),
       filter: this.fb.control(''),
       groupId: this.fb.control(null),
