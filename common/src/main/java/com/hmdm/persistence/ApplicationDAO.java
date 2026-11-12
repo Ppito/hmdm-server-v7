@@ -30,9 +30,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -777,6 +779,79 @@ public class ApplicationDAO extends AbstractLinkedDAO<Application, ApplicationCo
                 .orElseThrow(SecurityException::onAnonymousAccess);
 
 
+    }
+
+    /**
+     * <p>Sets the total size of locally stored files of all versions for each application.</p>
+     * <p>Only files in the current customer's directory are counted.</p>
+     *
+     * @param applications a list of applications to update.
+     */
+    public void setApplicationSizes(List<Application> applications) {
+        SecurityContext.get().getCurrentCustomerId().ifPresent(customerId -> {
+            final Customer customer = customerDAO.findById(customerId);
+            final Map<Integer, Set<String>> appUrls = new HashMap<>();
+            for (ApplicationVersion version : this.mapper.getCustomerApplicationVersionUrls(customerId)) {
+                appUrls.computeIfAbsent(version.getApplicationId(), k -> new HashSet<>()).addAll(getVersionUrls(version));
+            }
+            for (Application application : applications) {
+                application.setSize(getLocalFilesSize(customer, appUrls.getOrDefault(application.getId(), Set.of())));
+            }
+        });
+    }
+
+    /**
+     * <p>Sets the size of locally stored files for each application version.</p>
+     * <p>Only files in the current customer's directory are counted.</p>
+     *
+     * @param versions a list of application versions to update.
+     */
+    public void setApplicationVersionSizes(List<ApplicationVersion> versions) {
+        SecurityContext.get().getCurrentCustomerId().ifPresent(customerId -> {
+            final Customer customer = customerDAO.findById(customerId);
+            for (ApplicationVersion version : versions) {
+                version.setSize(getLocalFilesSize(customer, getVersionUrls(version)));
+            }
+        });
+    }
+
+    /**
+     * <p>Gets non-empty file URLs of the version (universal, armeabi-v7a and arm64-v8a).</p>
+     *
+     * @param version an application version.
+     * @return a set of unique file URLs.
+     */
+    private Set<String> getVersionUrls(ApplicationVersion version) {
+        final Set<String> urls = new HashSet<>();
+        for (String url : new String[] {version.getUrl(), version.getUrlArmeabi(), version.getUrlArm64()}) {
+            if (url != null && !url.trim().isEmpty()) {
+                urls.add(url);
+            }
+        }
+        return urls;
+    }
+
+    /**
+     * <p>Calculates the total size of files stored on this server in the customer's directory.</p>
+     * <p>External URLs and missing files are counted as 0.</p>
+     *
+     * @param customer a customer owning the files.
+     * @param urls a set of file URLs.
+     * @return a total size in bytes.
+     */
+    private long getLocalFilesSize(Customer customer, Set<String> urls) {
+        long size = 0;
+        for (String url : urls) {
+            final String path = FileUtil.translateURLToLocalFilePath(customer, url, baseUrl);
+            if (path != null) {
+                final String customerDir = customer.getFilesDir();
+                final File file = customerDir != null && !customerDir.isEmpty()
+                        ? Path.of(filesDirectory, customerDir, path).toFile()
+                        : Path.of(filesDirectory, path).toFile();
+                size += file.length();
+            }
+        }
+        return size;
     }
 
     /**

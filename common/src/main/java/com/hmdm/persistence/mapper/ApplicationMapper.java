@@ -323,6 +323,19 @@ public interface ApplicationMapper {
             "ORDER BY mdm_app_version_comparison_index(applicationVersions.version) DESC")
     List<ApplicationVersion> getApplicationVersions(@Param("id") Integer applicationId);
 
+    /**
+     * <p>Gets the file URLs of all application versions owned by the specified customer.</p>
+     *
+     * @param customerId a customer ID.
+     * @return a list of versions with only id, applicationId, url, urlArmeabi and urlArm64 fields set.
+     */
+    @Select("SELECT applicationVersions.id, applicationVersions.applicationId, applicationVersions.url, " +
+            "applicationVersions.urlArmeabi, applicationVersions.urlArm64 " +
+            "FROM applicationVersions " +
+            "INNER JOIN applications ON applications.id = applicationVersions.applicationId " +
+            "WHERE applications.customerId = #{customerId}")
+    List<ApplicationVersion> getCustomerApplicationVersionUrls(@Param("customerId") int customerId);
+
     @Select(SELECT_VERSION_BASE +
             "WHERE (customerId = #{customerId} OR customers.master = TRUE) " +
             "AND applications.pkg=#{pkg} AND applicationVersions.version=#{version} LIMIT 1")

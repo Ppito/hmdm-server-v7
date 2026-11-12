@@ -116,7 +116,9 @@ public class ApplicationResource {
                     SecurityContext.get().getCurrentUserName());
             return Response.PERMISSION_DENIED();
         }
-        return Response.OK(this.applicationDAO.getAllApplications());
+        List<Application> applications = this.applicationDAO.getAllApplications();
+        this.applicationDAO.setApplicationSizes(applications);
+        return Response.OK(applications);
     }
 
  // =================================================================================================================
@@ -139,7 +141,9 @@ public class ApplicationResource {
                     SecurityContext.get().getCurrentUserName());
             return Response.PERMISSION_DENIED();
         }
-        return Response.OK(this.applicationDAO.getAllApplicationsByValue(value));
+        List<Application> applications = this.applicationDAO.getAllApplicationsByValue(value);
+        this.applicationDAO.setApplicationSizes(applications);
+        return Response.OK(applications);
     }
 
     // =================================================================================================================
@@ -186,7 +190,9 @@ public class ApplicationResource {
             return Response.PERMISSION_DENIED();
         }
         try {
-            return Response.OK(this.applicationDAO.getApplicationVersions(id));
+            List<ApplicationVersion> versions = this.applicationDAO.getApplicationVersions(id);
+            this.applicationDAO.setApplicationVersionSizes(versions);
+            return Response.OK(versions);
         } catch (Exception e) {
             logger.error("Failed to retrieve the versions for application #{}", id, e);
             return Response.INTERNAL_ERROR();

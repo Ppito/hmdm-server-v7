@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -11,6 +11,7 @@ import { ApplicationFacadeService } from '../../services/application-facade.serv
 import { VersionDialogService } from '../../services/version-dialog.service';
 import { VersionFacadeService } from '../../services/version-facade.service';
 import { HasPermissionDirective } from '../../../shared/directives/has-permission.directive';
+import { SettingsFacadeService } from '../../../shared/services/settings-facade.service';
 
 @Component({
   selector: 'core-application-versions-table',
@@ -33,8 +34,11 @@ export class ApplicationVersionsTable implements OnInit {
   private readonly versionFacadeService = inject(VersionFacadeService);
   private readonly versionDialogService = inject(VersionDialogService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly settingsFacadeService = inject(SettingsFacadeService);
 
-  tableConfig = this.applicationsVersionsTableConfig.getConfig();
+  tableConfig = computed(() =>
+    this.applicationsVersionsTableConfig.getConfig(this.settingsFacadeService.sizeColumnTitle()),
+  );
   tableData = this.versionFacadeService.versions;
   application = signal<TApplicationDTO | null>(null);
 

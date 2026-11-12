@@ -3,10 +3,12 @@ import { Observable, take } from 'rxjs';
 import { ApplicationService } from '../../entity/application/services/application.service';
 import { TApplicationDTO } from '../../entity/application/types/application-dto.type';
 import { TVersionDTO } from '../../entity/application/types/version-dto.type';
+import { SettingsFacadeService } from '../../shared/services/settings-facade.service';
 
 @Injectable({ providedIn: 'root' })
 export class VersionFacadeService {
   private readonly applicationService: ApplicationService = inject(ApplicationService);
+  private readonly settingsFacadeService = inject(SettingsFacadeService);
 
   private _versions: WritableSignal<TVersionDTO[]> = signal([]);
   private lastId: number = -1;
@@ -19,6 +21,7 @@ export class VersionFacadeService {
 
   initApplicationId(applicationId: number): void {
     this.lastId = applicationId;
+    this.settingsFacadeService.fetchStorageLimit().subscribe();
 
     this.applicationService
       .getVersionsByApplicationId(applicationId)

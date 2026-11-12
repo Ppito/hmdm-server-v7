@@ -22,6 +22,7 @@
 package com.hmdm.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -78,6 +79,13 @@ public class ApplicationVersion implements Serializable {
      */
     @Schema(hidden = true)
     private String filePath;
+
+    /**
+     * <p>A total size (in bytes) of locally stored files of this version (all architectures). Set for lists only.</p>
+     */
+    @Schema(hidden = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long size;
 
     /**
      * <p>Constructs new <code>ApplicationVersion</code> instance. This implementation does nothing.</p>
@@ -222,6 +230,14 @@ public class ApplicationVersion implements Serializable {
 
     public void setArch(String arch) {
         this.arch = arch;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     @Override

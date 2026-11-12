@@ -992,6 +992,7 @@
   "table.heading.file.path": "Path",
   "table.heading.file.address": "Address",
   "table.heading.file.size": "Size",
+  "table.heading.size.free": "({{free}} MB free)",
   "table.heading.file.actions": "Actions",
 
   "table.heading.users.login": "Login",

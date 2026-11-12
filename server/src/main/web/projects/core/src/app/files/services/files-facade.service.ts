@@ -3,12 +3,14 @@ import { finalize, take } from 'rxjs';
 import { TOption } from 'hmdm-ui-kit';
 import { FileService } from '../../entity/file/services/file.service';
 import { TFileDTO } from '../../entity/file/types/file-dto.type';
+import { SettingsFacadeService } from '../../shared/services/settings-facade.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilesFacadeService {
   private readonly fileService: FileService = inject(FileService);
+  private readonly settingsFacadeService = inject(SettingsFacadeService);
   private _files: WritableSignal<TFileDTO[]> = signal<TFileDTO[]>([]);
   private _allFiles: WritableSignal<TFileDTO[]> = signal<TFileDTO[]>([]);
   private searchTerm: WritableSignal<string> = signal('');
@@ -33,6 +35,7 @@ export class FilesFacadeService {
 
   searchFiles(isInitAll: boolean = false): void {
     this.isLoadingFiles.set(true);
+    this.settingsFacadeService.fetchStorageLimit().subscribe();
 
     this.fileService
       .searchFiles(this.searchTerm())

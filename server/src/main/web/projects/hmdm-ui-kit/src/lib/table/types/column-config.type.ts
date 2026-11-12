@@ -12,4 +12,6 @@ export type TColumnConfig<T = any> = {
   comparator?: (a: T, b: T) => number;
   sticky?: boolean;
   stickyEnd?: boolean;
+  /** Horizontal alignment of the header title; 'end' aligns it with right-justified cell values. Default: 'start'. */
+  headerAlign?: 'start' | 'end';
 };

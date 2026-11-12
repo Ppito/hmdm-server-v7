@@ -8,12 +8,14 @@ import { ApplicationConfigDialog } from '../components/application-config-dialog
 import { EditVersionDialog } from '../components/edit-version-dialog/edit-version-dialog';
 import { VersionDialog } from '../components/version-dialog/version-dialog';
 import { VersionFacadeService } from './version-facade.service';
+import { ApplicationFacadeService } from './application-facade.service';
 
 @Injectable()
 export class VersionDialogService {
   private readonly dialog: MatDialog = inject(MatDialog);
   private readonly versionService = inject(ApplicationService);
   private readonly versionFacadeService = inject(VersionFacadeService);
+  private readonly applicationFacadeService = inject(ApplicationFacadeService);
 
   openAddVersionDialog(applicationId: number): void {
     this.dialog
@@ -25,6 +27,7 @@ export class VersionDialogService {
       .pipe(take(1), filter(Boolean))
       .subscribe(() => {
         this.versionFacadeService.initLast();
+        this.applicationFacadeService.markForReload();
       });
   }
 
@@ -42,6 +45,7 @@ export class VersionDialogService {
       )
       .subscribe(() => {
         this.versionFacadeService.initLast();
+        this.applicationFacadeService.markForReload();
       });
   }
 
@@ -66,6 +70,7 @@ export class VersionDialogService {
       )
       .subscribe(() => {
         this.versionFacadeService.initLast();
+        this.applicationFacadeService.markForReload();
       });
   }
 

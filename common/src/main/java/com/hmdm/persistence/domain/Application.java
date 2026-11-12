@@ -23,6 +23,7 @@ package com.hmdm.persistence.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -122,6 +123,12 @@ public class Application implements CustomerData, Serializable {
     private String latestVersionText;
     @Schema(hidden = true)
     private Integer usedVersionId;
+    /**
+     * <p>A total size (in bytes) of locally stored files of all application versions. Set for lists only.</p>
+     */
+    @Schema(hidden = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long size;
 
     public String getIcon() {
         return icon;
@@ -360,6 +367,14 @@ public class Application implements CustomerData, Serializable {
 
     public void setUsedVersionId(Integer usedVersionId) {
         this.usedVersionId = usedVersionId;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     public boolean isRunAfterInstall() {

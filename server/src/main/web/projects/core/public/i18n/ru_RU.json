@@ -987,6 +987,7 @@
   "table.heading.file.path": "Путь",
   "table.heading.file.address": "Адрес",
   "table.heading.file.size": "Размер",
+  "table.heading.size.free": "(свободно {{free}} МБ)",
   "table.heading.file.actions": "Действия",
 
   "table.heading.users.login": "Login",
