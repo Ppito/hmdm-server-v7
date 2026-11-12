@@ -114,6 +114,11 @@ public class ConfigurationFileResource {
                                                     schema = @Schema(type = "string", format = "binary"))
                                             @FormDataParam("file")
                                                     FormDataContentDisposition fileDetail) {
+        if (!SecurityContext.get().hasPermission("edit_files")) {
+            logger.error("Unauthorized attempt to upload a configuration file by user " +
+                    SecurityContext.get().getCurrentUserName());
+            return Response.PERMISSION_DENIED();
+        }
         try {
 
             return SecurityContext.get().getCurrentCustomerId().map(customerId -> {
@@ -128,8 +133,15 @@ public class ConfigurationFileResource {
                     // For some reason, the browser sends the file name in ISO_8859_1, so we use a workaround to convert
                     // it to UTF_8 and enable non-ASCII characters
                     // https://stackoverflow.com/questions/50582435/jersey-filename-encoded
-                    String fileName = new String(fileDetail.getFileName().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+                    String rawFileName = new String(fileDetail.getFileName().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+                    // Strip any path components to prevent path traversal
+                    String fileName = new File(rawFileName).getName();
                     File configFile = new File(customerFilesDirectory, fileName);
+                    if (fileName.isEmpty() || !configFile.getCanonicalPath()
+                            .startsWith(customerFilesDirectory.getCanonicalPath() + File.separator)) {
+                        logger.error("Rejected configuration file upload with unsafe name: {}", rawFileName);
+                        return Response.PERMISSION_DENIED();
+                    }
 
                     if (configFile.exists()) {
                         logger.warn("The file already exists and will be overwritten: {}", configFile.getAbsolutePath());
