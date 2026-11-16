@@ -41,7 +41,10 @@
             [stickyEnd]="column.stickyEnd"
           >
             <th mat-header-cell *matHeaderCellDef class="table-header" [style.width]="column.width">
-              <div class="table-header-inner">
+              <div
+                class="table-header-inner"
+                [class.table-header-inner-end]="column.headerAlign === 'end'"
+              >
                 <div class="table-header-title">
                   {{ column.title | translate }}
                 </div>

@@ -24,6 +24,12 @@
   &-header-inner {
     display: flex;
     align-items: center;
+
+    &-end {
+      justify-content: flex-end;
+      // Header cells have 8px side padding, data cells have 16px
+      padding-right: 8px;
+    }
   }
 
   &-header-icon {

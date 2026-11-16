@@ -5,15 +5,18 @@ import { ApplicationService } from '../../entity/application/services/applicatio
 import { TApplicationDTO } from '../../entity/application/types/application-dto.type';
 import { TApplicationsSearchFormValue } from '../types/applications-search-form.type';
 import { UserStateService } from '../../shared/services/user-state.service';
+import { SettingsFacadeService } from '../../shared/services/settings-facade.service';
 
 @Injectable({ providedIn: 'root' })
 export class ApplicationFacadeService {
   private readonly applicationService: ApplicationService = inject(ApplicationService);
   private readonly userStateService = inject(UserStateService);
+  private readonly settingsFacadeService = inject(SettingsFacadeService);
 
   private _applications: WritableSignal<TApplicationDTO[]> = signal([]);
   private pageData: PageEvent = { pageIndex: 0, pageSize: 50, length: 0 };
   private searchTerm: string = '';
+  private reloadRequired: boolean = false;
 
   formData: TApplicationsSearchFormValue | null = null;
   isLoadingApplications: WritableSignal<boolean> = signal(false);
@@ -74,8 +77,22 @@ export class ApplicationFacadeService {
     this.searchApplications();
   }
 
+  /** Marks the applications list as outdated (e.g. app sizes changed after a version update). */
+  markForReload(): void {
+    this.reloadRequired = true;
+  }
+
+  /** Reloads the applications list if it was marked as outdated by markForReload(). */
+  reloadIfRequired(): void {
+    if (this.reloadRequired) {
+      this.searchApplications();
+    }
+  }
+
   searchApplications(): void {
+    this.reloadRequired = false;
     this.isLoadingApplications.set(true);
+    this.settingsFacadeService.fetchStorageLimit().subscribe();
 
     this.applicationService
       .search(this.searchTerm)

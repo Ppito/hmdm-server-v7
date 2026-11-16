@@ -1,5 +1,7 @@
 import { computed, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ValidatorFn, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { patternMessageValidator } from 'hmdm-ui-kit';
 import { map, Observable, take, tap } from 'rxjs';
 import { FileService } from '../../entity/file/services/file.service';
@@ -14,6 +16,13 @@ import { REGEX } from '../const/regex.const';
 export class SettingsFacadeService {
   private readonly settingsService: SettingsService = inject(SettingsService);
   private readonly fileService: FileService = inject(FileService);
+  private readonly translateService = inject(TranslateService);
+  private readonly currentLang = toSignal(
+    this.translateService.onLangChange.pipe(map((event) => event.lang)),
+    {
+      initialValue: this.translateService.getCurrentLang(),
+    },
+  );
 
   settings: WritableSignal<TSettingsDTO | null> = signal(null);
   storageLimit: WritableSignal<TLimitResponse | null> = signal(null);
@@ -21,6 +30,19 @@ export class SettingsFacadeService {
     const limit = this.storageLimit();
     if (!limit || limit.sizeLimit <= 0) return null;
     return Math.max(0, limit.sizeLimit - limit.sizeUsed);
+  });
+  /** Title of the Size column: translated "Size (<xx> MB free)" if the storage is limited, otherwise the translation key. */
+  sizeColumnTitle = computed(() => {
+    const free = this.availableSpaceMb();
+    if (free === null) {
+      return 'table.heading.file.size';
+    }
+    this.currentLang();
+    return (
+      this.translateService.instant('table.heading.file.size') +
+      ' ' +
+      this.translateService.instant('table.heading.size.free', { free })
+    );
   });
   phoneMask = computed(() => {
     const settings = this.settings();

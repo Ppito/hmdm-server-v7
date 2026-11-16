@@ -14,4 +14,6 @@ export type TVersionDTO = {
   apkHash: string | null;
   arch: string | null;
   filePath: string | null;
+  /** Total size of locally stored version files, in bytes */
+  size?: number;
 };

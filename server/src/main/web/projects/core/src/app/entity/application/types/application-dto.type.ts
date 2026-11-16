@@ -38,4 +38,6 @@ export type TApplicationDTO = {
   versionCode: number;
   screenOrder: number | null;
   actionChanged?: boolean;
+  /** Total size of all locally stored version files, in bytes */
+  size?: number;
 };

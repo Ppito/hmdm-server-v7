@@ -323,6 +323,44 @@ public interface ApplicationMapper {
             "ORDER BY mdm_app_version_comparison_index(applicationVersions.version) DESC")
     List<ApplicationVersion> getApplicationVersions(@Param("id") Integer applicationId);
 
+    /**
+     * <p>Gets the file URLs of all application versions owned by the specified customer.</p>
+     *
+     * @param customerId a customer ID.
+     * @return a list of versions with only id, applicationId, url, urlArmeabi and urlArm64 fields set.
+     */
+    @Select("SELECT applicationVersions.id, applicationVersions.applicationId, applicationVersions.url, " +
+            "applicationVersions.urlArmeabi, applicationVersions.urlArm64 " +
+            "FROM applicationVersions " +
+            "INNER JOIN applications ON applications.id = applicationVersions.applicationId " +
+            "WHERE applications.customerId = #{customerId}")
+    List<ApplicationVersion> getCustomerApplicationVersionUrls(@Param("customerId") int customerId);
+
+    /**
+     * <p>Gets the free-text file URLs set by the specified customer outside application versions:
+     * launcher URLs of configurations and URLs of external files.</p>
+     *
+     * @param customerId a customer ID.
+     * @return a list of non-empty URLs.
+     */
+    @Select("SELECT launcherUrl FROM configurations " +
+            "WHERE customerId = #{customerId} AND launcherUrl IS NOT NULL AND launcherUrl <> '' " +
+            "UNION " +
+            "SELECT externalUrl FROM uploadedFiles " +
+            "WHERE customerId = #{customerId} AND external AND externalUrl IS NOT NULL AND externalUrl <> ''")
+    List<String> getCustomerFreeTextUrls(@Param("customerId") int customerId);
+
+    /**
+     * <p>Gets the paths of the specified customer's uploaded files which are linked to configurations.</p>
+     *
+     * @param customerId a customer ID.
+     * @return a list of file paths relative to the customer's files directory.
+     */
+    @Select("SELECT DISTINCT f.filePath FROM uploadedFiles f " +
+            "INNER JOIN configurationFiles cf ON cf.fileId = f.id " +
+            "WHERE f.customerId = #{customerId} AND f.filePath IS NOT NULL")
+    List<String> getCustomerConfigurationFilePaths(@Param("customerId") int customerId);
+
     @Select(SELECT_VERSION_BASE +
             "WHERE (customerId = #{customerId} OR customers.master = TRUE) " +
             "AND applications.pkg=#{pkg} AND applicationVersions.version=#{version} LIMIT 1")

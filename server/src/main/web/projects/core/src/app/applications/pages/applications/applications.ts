@@ -66,6 +66,7 @@ export class Applications extends BaseComponent implements OnInit {
       });
 
     this.applicationFacadeService.clearFilters();
+    this.applicationFacadeService.reloadIfRequired();
   }
 
   onAddApplicationClick(): void {

@@ -7,7 +7,10 @@ import { SizeCell } from '../components/size-cell/size-cell';
   providedIn: 'root',
 })
 export class FilesTableConfig {
-  getConfig(): TTableConfig {
+  /**
+   * @param sizeTitle Title (or translation key) of the Size column, may include the free storage quota.
+   */
+  getConfig(sizeTitle: string = 'table.heading.file.size'): TTableConfig {
     return {
       columns: [
         {
@@ -17,11 +20,6 @@ export class FilesTableConfig {
         {
           field: 'description',
           title: 'table.heading.file.comment',
-        },
-        {
-          field: 'size',
-          title: 'table.heading.file.size',
-          cellRenderer: SizeCell,
         },
         {
           field: 'uploadTime',
@@ -37,6 +35,12 @@ export class FilesTableConfig {
           field: 'replaceVariables',
           title: 'table.heading.file.variable',
           cellRenderer: BooleanCell,
+        },
+        {
+          field: 'size',
+          title: sizeTitle,
+          cellRenderer: SizeCell,
+          headerAlign: 'end',
         },
         {
           field: 'actions',
